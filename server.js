@@ -47,6 +47,10 @@ app.post('/create_product', async (req, res) => {
     res.send(returnedValue);
 })
 
+app.post('/create_product', (req, res) => {
+    let id = req.query.idOfProduct
+})
+
 
 app.post('update_product', async (req, res) => {
     console.log(req.body);

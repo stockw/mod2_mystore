@@ -6,6 +6,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 });
 console.log(params);
 
+
 let id = params.id;
 console.log(id);
 
