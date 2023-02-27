@@ -29,6 +29,12 @@ mongoose.connect(connectionString, {
     console.log('connected to mongo');
   });
 
+//index of all products
+  app.get('/get_products', async (req, res) => {
+    let response = await MyProducts.find({});
+    console.log(response);
+    res.json(response);
+});
 
 app.post('/create_product', async (req, res) => {
     const {nameString: name, imgString: img, priceNumber: price, descriptionString: description, inStockNumber: inStock} = req.body
@@ -47,9 +53,9 @@ app.post('/create_product', async (req, res) => {
     res.send(returnedValue);
 })
 
-app.post('/create_product', (req, res) => {
-    let id = req.query.idOfProduct
-})
+// app.post('./create_product', (req, res) => {
+//     let id = req.query.idOfProduct
+// })
 
 
 app.post('update_product', async (req, res) => {
@@ -60,28 +66,27 @@ app.post('update_product', async (req, res) => {
 })
 
 
-app.get('/get_products', async (req, res) => {
-    let response = await MyProducts.find({});
-    console.log(response);
-    res.json(response);
-});
 
 
-app.get('/getspecificproduct/:product_id', async (req, res) => {
+
+app.get('/get_specific_product/:productId', async (req, res) => {
     console.log("get specific product route");
-    // let id = req.params.product_id;
-    // let response = await Product.findById(id);
-    // console.log(response);
-    // console.log(id);
-
+    let id = req.params.productId;
+    let response = await Product.findById(id);
+    console.log(response);
+    console.log(id);
     res.json(response)
 })
 
-app.get('/get_single_product_using_id/:idOfProduct', async (req, res) => {
-    let id = req.params.idOfProduct;
-    let response = await MyProducts.findById(id);
-    console.log(response);
-    res.send(response);
+// app.get('/get_single_product_using_id/:idOfProduct', async (req, res) => {
+//     let id = req.params.idOfProduct;
+//     let response = await MyProducts.findById(id);
+//     console.log(response);
+//     res.send(response);
+// })
+
+app.delete("/delete/:productID", async(req, res) => {
+    let id = req.params.productId;
 })
 
  app.listen(5000, () => {

@@ -7,11 +7,12 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 console.log(params);
 
 
-let id = params.id;
-console.log(id);
+const id = params.id;
+const name = params.name;
+console.log(id, name);
 
 const getSingleProduct = async () => {
-    let response = await fetch(`http://localhost:5000/get_single_product_using_id/${id}`);
+    let response = await fetch(`http://localhost:5000/get_single_product_using_img/${img}`);
     let finalData = await response.json();
     
     console.log(finalData);
@@ -27,4 +28,6 @@ const getSingleProduct = async () => {
 }
 
 getSingleProduct()
+
+
 
