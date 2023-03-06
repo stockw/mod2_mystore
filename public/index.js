@@ -35,18 +35,33 @@ const getItems = async () => {
     data.json().then((parsedData) => {
         parsedData.forEach(element => {
             console.log(element);
-            let pTag=document.createElement("h1")
+            let title=document.createElement("h1")
             let desc=document.createElement("p")
             let image=document.createElement("img")
+            let amount=document.createElement("div")
+            let deleteButton=document.createElement("button")
             image.addEventListener ('click', async () => {
-              window.location.href = './single_product'
+              window.location.href = `./single_product?id=${element._id}`
             })
             image.src=element.img
-            pTag.textContent=element.name
+            title.textContent=element.name
             desc.textContent=element.description
-            container.appendChild(pTag)
-            container.appendChild(desc)
+            deleteButton.textContent="delete"
+            amount.textContent=element.price
+            container.appendChild(title)
+            container.appendChild(amount)
             container.appendChild(image)
+            container.appendChild(deleteButton)
+            deleteButton.addEventListener("click", async () => {
+              console.log("item clicked", element._id);
+              let response = await fetch(`http://localhost:5000/delete/${element._id}`, {
+                method: "DELETE"
+              })
+              console.log(response);
+              location.reload();
+              ;
+            })
+            
         });
     })
 }

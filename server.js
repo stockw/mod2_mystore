@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+// const router = require('express');
 const cors = require('cors');
 require('dotenv').config()
 const app = express()
@@ -14,6 +15,7 @@ app.use(cors({
   }));
  
   app.use(express.json());
+  // app.use(router)
 
   let connectionString = `mongodb+srv://${process.env.MONGOOSEUSERNAME}:${process.env.MONGOOSEPASSWORD}@mongosetupcluster.1dnn4wp.mongodb.net/Store?retryWrites=true&w=majority`;
 
@@ -69,24 +71,33 @@ app.post('update_product', async (req, res) => {
 
 
 
-app.get('/get_specific_product/:productId', async (req, res) => {
-    console.log("get specific product route");
-    let id = req.params.productId;
-    let response = await Product.findById(id);
-    console.log(response);
-    console.log(id);
-    res.json(response)
-})
-
-// app.get('/get_single_product_using_id/:idOfProduct', async (req, res) => {
-//     let id = req.params.idOfProduct;
-//     let response = await MyProducts.findById(id);
+// app.get('/get_specific_product/:productId', async (req, res) => {
+//     console.log("get specific product route");
+//     let id = req.params.productId;
+//     let response = await product.findById(id);
 //     console.log(response);
-//     res.send(response);
+//     console.log(id);
+//     res.json(response)
 // })
 
+app.get('/get_single_product/:idOfProduct', async (req, res) => {
+    let id = req.params.idOfProduct;
+    let response = await MyProducts.findById(id);
+    console.log(response);
+    res.send(response);
+})
+
+// app.delete('/delete/:idOfProduct', async (req, res) => {
+//   let id = req.params.idOfProduct
+//   let response = await MyProducts.findByIdAndDelete(id)
+//     .then(() => res.json({ success: true }))
+//     .catch(err => res.status(404).json({ success: false }));
+// });
+
 app.delete("/delete/:productID", async(req, res) => {
-    let id = req.params.productId;
+    let id = req.params.productID;
+    let response = await MyProducts.findByIdAndDelete(id);
+    console.log(response);
 })
 
  app.listen(5000, () => {

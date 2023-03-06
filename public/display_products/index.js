@@ -21,4 +21,3 @@ const getItems = async () => {
 }
 
 getItems()
-
